@@ -2,7 +2,7 @@ const ngrok = require("@ngrok/ngrok");
 
 const ingress = async () => {
   const listener = await ngrok.forward({
-    addr: 3000,
+    addr: process.env.PORT,
     // authtoken_from_env: true,
     authtoken: process.env.AUTH_TOKEN,
     domain: process.env.DOMAIN,

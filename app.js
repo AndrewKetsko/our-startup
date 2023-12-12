@@ -9,8 +9,9 @@ app.all("/", (req, res) => {
   res.json({ message: "test" });
 });
 
-app.post("/webhooks", (req, res) => {
-  let { body, headers } = req;
+app.post("/webhooks", ({ body, headers }, res) => {
+  // let { body, headers } = req;
+  
   console.log("-------------- New Request POST --------------");
   console.log("Headers:" + JSON.stringify(headers, null, 3));
   console.log("Body:" + JSON.stringify(body, null, 3));
@@ -23,11 +24,11 @@ app.post("/webhooks", (req, res) => {
   }
 });
 
-app.get("/webhooks", (req, res) => {
+app.get("/webhooks", ({ body, headers }, res) => {
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
   const challenge = req.query["hub.challenge"];
-  let { body, headers } = req;
+  // let { body, headers } = req;
 
   console.log("-------------- New Request GET --------------");
   console.log("Headers:" + JSON.stringify(headers, null, 3));
@@ -47,7 +48,7 @@ app.get("/webhooks", (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("server started on port 3000");
+app.listen(process.env.PORT, () => {
+  console.log(`server started on port ${process.env.PORT}`);
   ingress();
 });
